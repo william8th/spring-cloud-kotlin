@@ -1,0 +1,22 @@
+server:
+  port: 8765
+
+zuul:
+  prefix: /api
+  routes:
+    account:
+      path: /account/**
+      serviceId: account-service
+    customer:
+      path: /customer/**
+      serviceId: customer-service
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: false
+
+ribbon:
+  eureka:
+    enabled: true

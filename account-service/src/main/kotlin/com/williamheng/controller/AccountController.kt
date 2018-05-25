@@ -24,6 +24,7 @@ class AccountController {
 
     @RequestMapping("/accounts/{number}")
     fun findByAccountNumber(@PathVariable("number") number: String): Account {
+        log.info("Retrieving account where accountNumber={}", number)
         return accounts.stream()
                 .filter({
                     it.accountNumber.equals(number)
@@ -44,6 +45,7 @@ class AccountController {
 
     @RequestMapping("/accounts")
     fun findAll(): Collection<Account> {
+        log.info("Retrieving all accounts")
         return accounts
     }
 

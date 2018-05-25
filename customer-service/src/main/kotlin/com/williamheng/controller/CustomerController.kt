@@ -2,12 +2,15 @@ package com.williamheng.controller
 
 import com.williamheng.client.AccountClient
 import com.williamheng.model.Customer
+import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class CustomerController(accountClient: AccountClient) {
+
+    private val log = LoggerFactory.getLogger(CustomerController::class.java)
 
     private val accountClient: AccountClient = accountClient;
 
@@ -20,6 +23,7 @@ class CustomerController(accountClient: AccountClient) {
 
     @RequestMapping("/customers/identificationNumber/{identificationNumber}")
     fun findByIdentificationNumber(@PathVariable("identificationNumber") identificationNumber: String): Customer {
+        log.info("Retrieving customer with identificationNumber={}", identificationNumber)
         return customers.stream()
                 .filter({
                     it.identificationNumber.equals(identificationNumber)
@@ -30,11 +34,13 @@ class CustomerController(accountClient: AccountClient) {
 
     @RequestMapping("/customers")
     fun findAll(): Collection<Customer> {
+        log.info("Retrieving all customers")
         return customers
     }
 
     @RequestMapping("/customers/{customerId}")
     fun findByCustomerId(@PathVariable("customerId") customerId: Int): Customer {
+        log.info("Retrieving customer where customerId={}", customerId)
         val customer = customers.stream()
                             .filter({
                                 it.customerId == customerId
